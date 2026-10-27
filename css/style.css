@@ -1,122 +1,168 @@
 @charset "UTF-8";
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ===================================================
+ * 폰트 설정: Pretendard (한글) & Outfit (영문/숫자/테크)
+ * =================================================== */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap");
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-ul,ol,li {
-    list-style: none;
+html {
+  font-family: "Pretendard", "Outfit", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  scroll-behavior: auto; /* Lenis가 스크롤을 제어하므로 auto 유지 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-img {
-    vertical-align: top;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+/* ===================================================
+ * Lenis 스크롤 제어 기본 세팅
+ * =================================================== */
+html.lenis, html.lenis body {
+  height: auto;
 }
 
-:root {
-    --main: rgb(170, 22, 22);
-    --main_ligth: rgb(241, 198, 198);
-    --main_dark: rgb(148, 81, 81);
-    --sub: #222;
-    --bg: #fff;
-    --bg2: #f5f5f5;
-    --text: #666;
-    --line: rgba(0,0,0,0.4);
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
-a{
-    text-decoration: none;
-    color: #000;
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
-a:hover {
-    text-decoration: underline;
-    color: var(--main);
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
-body {
-    background: var(--bg);
-    color: var(--text);
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
-/* layout */
-header {
-    width: 1340px;
-    height: 100px;
-    margin: 0 auto;
-    background: var(--bg2);
-}    
-
-.slider {
-    width: 100%;
-    height: 350px;
-    background: skyblue;
+/* ===================================================
+ * 커스텀 스크롤바
+ * =================================================== */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
-.slide_wrap {
-    width: 100%;
-    height: 100%;
-    /* border: 1px solid #f00; */
-    position: relative;
+/* ===================================================
+ * 탭 버튼 액티브 스타일
+ * =================================================== */
+.tab-btn {
+  color: #4b5563;
+  background-color: transparent;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.slide_item {
-    width: 100%;
-    height: 100%;
-    /* border: 1px solid #000; */
-    position: absolute;
-    top: 0;
-    left: 0;
+.tab-btn.active-tab {
+  background-color: #111215 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.slide_item p {
-    font-size: 2vw;
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 30px;
-    background: var(--main_dark);
-    border-radius: 30px;
-    font-weight: bold;
-    color: #fff;
-    width: 60%;
-    text-align: center;
-    opacity: 0.7;
+/* ===================================================
+ * 랭킹 리스트 아이템 스타일
+ * =================================================== */
+.bench-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  transition: all 0.22s ease;
+  cursor: pointer;
+  user-select: none;
 }
 
-.link {
-    width: 1340px;
-    height: 90px;
-    margin: 0 auto;
-    background: pink;
-    margin-top: -90px;
-    position: relative;
-    z-index: 10;
-
+.bench-item:hover {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  transform: translateX(3px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
 }
 
-.banner {
-    width: 1340px;
-    height: 200px;
-    margin: 0 auto;
-    background: rgb(38, 196, 224);
+.bench-item.hidden-item {
+  display: none;
 }
 
-.board {
-    width: 1340px;
-    height: 350px;
-    margin: 0 auto;
-    background: rgb(31, 116, 228);
+/* 1, 2, 3위 뱃지 효과 */
+.rank-1 {
+  color: #d97706 !important; /* 골드 */
+}
+.rank-2 {
+  color: #475569 !important; /* 실버 */
+}
+.rank-3 {
+  color: #92400e !important; /* 브론즈 */
 }
 
-footer {
-    width: 1340px;
-    height: 120px;
-    margin: 0 auto;
-    background: var(--sub);
+/* ===================================================
+ * Swiper 띠배너 스타일
+ * =================================================== */
+.promo-swiper {
+  position: relative;
+}
+
+.promo-swiper .swiper-slide {
+  display: flex;
+  align-items: center;
+}
+
+/* ===================================================
+ * 카드 및 그래픽 애니메이션
+ * =================================================== */
+.category-nav-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.category-nav-card:hover {
+  transform: translateY(-4px);
+}
+
+.recommend-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.recommend-card:hover h4 {
+  color: #2563eb;
+}
+
+/* 펼치기 아코디언 애니메이션 래퍼 */
+.bench-extra-items {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.bench-extra-items.is-open {
+  max-height: 500px;
+  opacity: 1;
+}
+
+/* 모달 애니메이션 */
+#productModal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#productModal.active #modalCard {
+  transform: scale(1);
 }
