@@ -129,15 +129,21 @@ html.lenis, html.lenis body {
  * 카드 및 그래픽 애니메이션
  * =================================================== */
 .category-nav-card {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .category-nav-card:hover {
   transform: translateY(-4px);
 }
 
+/* GSAP 스크롤트리거 애니메이션과의 충돌을 방지하기 위해 
+ * transform/opacity에 영향을 주는 transition: all을 제거하고 텍스트 전환만 적용 */
 .recommend-card {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.recommend-card h4 {
+  transition: color 0.2s ease;
 }
 
 .recommend-card:hover h4 {
