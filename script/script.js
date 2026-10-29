@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (categoryKey === 'monitor') {
         iconSvg = `<svg class="w-4 h-4 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`;
       } else if (categoryKey === 'keyboard') {
-        iconSvg = `<svg class="w-4 h-4 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="6" cy="9" r="1"/><circle cx="10" cy="9" r="1"/><circle cx="14" cy="9" r="1"/><circle cx="18" cy="9" r="1"/><circle cx="7" cy="13" r="1"/><circle cx="11" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><line x1="9" y1="16" x2="15" y2="16"/></svg>`;
+        iconSvg = `<svg class="w-4 h-4 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="6" cy="8" r="1" fill="currentColor"/><circle cx="10" cy="8" r="1" fill="currentColor"/><circle cx="14" cy="8" r="1" fill="currentColor"/><circle cx="18" cy="8" r="1" fill="currentColor"/><circle cx="8" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="16" cy="12" r="1" fill="currentColor"/><line x1="7" y1="16" x2="17" y2="16"/></svg>`;
       } else {
         iconSvg = `<svg class="w-4 h-4 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="7"/><line x1="12" y1="6" x2="12" y2="10"/></svg>`;
       }
@@ -236,8 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return `
         <div class="bench-item" data-category="${categoryKey}" data-rank="${item.rank}" data-name="${item.name}" data-tag="${item.tag}" data-latency="${item.latency}" data-price="${item.price}" data-review="${item.review}">
           <div class="flex items-center gap-2.5 min-w-0 pr-2">
-            <span class="w-5 text-center text-sm font-tech ${rankColorClass}">${item.rank}</span>
-            <div class="w-7 h-7 rounded-lg bg-zinc-200/90 flex-shrink-0 flex items-center justify-center border border-zinc-300">
+            <span class="bench-rank w-6 min-w-[24px] flex-shrink-0 text-center text-sm font-tech tabular-nums ${rankColorClass}">${item.rank}</span>
+            <div class="bench-icon w-7 h-7 min-w-[28px] rounded-lg bg-zinc-200/90 flex-shrink-0 flex items-center justify-center border border-zinc-300">
               ${iconSvg}
             </div>
             <span class="text-xs font-semibold text-zinc-800 truncate hover:text-zinc-950">${item.name}</span>
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const expandBtn = document.querySelector(`.expand-btn[data-target="${categoryKey}List"]`);
     if (expandBtn) {
       expandBtn.querySelector('span').textContent = '펼치기';
-      const chevron = expandBtn.querySelector('i');
+      const chevron = expandBtn.querySelector('svg, i');
       if (chevron) chevron.style.transform = 'rotate(0deg)';
       const extraDiv = document.getElementById(`${categoryKey}Extra`);
       if (extraDiv) extraDiv.classList.remove('is-open');
@@ -333,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const categoryKey = targetListId.replace('List', '');
       const extraDiv = document.getElementById(`${categoryKey}Extra`);
       const spanText = btn.querySelector('span');
-      const chevron = btn.querySelector('i');
+      const chevron = btn.querySelector('svg, i');
 
       if (!extraDiv) return;
 
@@ -369,27 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===================================================
    * 8. 카테고리 네비게이션 클릭 시 스무스 스크롤 이동
    * =================================================== */
-  document.querySelectorAll('.category-nav-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      e.preventDefault();
-      const cat = card.dataset.category;
-      let targetElement = null;
-
-      if (cat === 'pad') {
-        targetElement = document.getElementById('recommendSection');
-      } else {
-        targetElement = document.getElementById('benchSection');
-      }
-
-      if (targetElement) {
-        if (lenis) {
-          lenis.scrollTo(targetElement, { offset: -80, duration: 1.1 });
-        } else {
-          targetElement.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    });
-  });
+  // 카테고리 네비게이션은 각 벤치마크 페이지로 이동하도록 기본 링크 동작을 사용합니다.
 
   /* ===================================================
    * 9. 추천 기기 카드 클릭 시 모달창 팝업 연동
